@@ -1,4 +1,5 @@
 import shell from "node-powershell";
+import Container from "./container";
 
 export default class ContainerFactory{
     
@@ -9,13 +10,13 @@ export default class ContainerFactory{
         });
     }
     
-    async createContainer(name, image, commands, ports){
+    async createContainer(container){
         var cmd = 'docker run -d';
         var msg = undefined;
-        if (ports != undefined) cmd += ' -p ' + ports;
-        cmd += ' --name=' + name;
-        cmd += ' ' + image + ' /bin/bash';
-        if (commands != undefined) cmd += ' -c "' + commands + '"';
+        if (container.getPorts() != undefined) cmd += ' -p ' + container.getPorts();
+        cmd += ' --name=' + container.getName();
+        cmd += ' ' + container.getImage() + ' /bin/bash';
+        if (container.getStartCommands() != undefined) cmd += ' -c "' + container.getStartCommands() + '"';
         await this.ps.addCommand(cmd)
         await this.ps.invoke()
         .then(output => {
