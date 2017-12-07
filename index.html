@@ -1,0 +1,33 @@
+<html>
+    <head>
+      <script src="node_modules/vizceral/dist/vizceral.js"></script>
+      <script>
+        function run () {
+          var viz = new Vizceral.default(document.getElementById('vizceral'));
+          viz.updateData({
+            name: 'us-west-2',
+            renderer: 'global',
+            maxVolume: 500,
+            nodes: [
+              {name: 'INTERNET'},
+              {name: 'service'}
+            ],
+            connections: [
+              {
+                source: 'INTERNET',
+                target: 'service',
+                metrics: { normal: 100, warning: 95, danger: 5 },
+                metadata: { streaming: true }
+              }
+            ]
+          });
+          viz.setView();
+          viz.animate();
+        }
+      </script>
+      <title>Vanilla Vizceral Example with Sample Data</title>
+    </head>
+    <body onload='run()'>
+      <canvas id='vizceral'></canvas>
+    </body>
+  </html>

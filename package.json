@@ -11,8 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel": "^6.23.0",
     "node-powershell": "^3.3.1",
-    "babel": "^6.23.0"
+    "vizceral": "^4.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
