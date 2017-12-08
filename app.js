@@ -4,6 +4,20 @@ import Container from "./container";
 var cf = new ContainerFactory();
 var msg = undefined;
 var disciplinasContainers = new Array();
+var app = require('http').createServer(index)
+    , io = require('socket.io')(80)
+    , fs = require('fs')
+;
+
+app.listen(3000, function() {
+    console.log("Servidor rodando!");
+});
+function index(req, res){
+    fs.readFile(__dirname + '/index.html', function(err, data){
+        res.writeHead(200);
+        res.end(data);
+    });
+};
 
 async function start(){
     var container = new Container();
@@ -24,5 +38,8 @@ async function start(){
         return;
     }
     await createDisciplinas(5);
+    setInterval(function(){
+        io.emit('json',JSON.stringify(disciplinasContainers));
+    },2000);
 }
 start();

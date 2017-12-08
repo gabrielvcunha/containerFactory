@@ -1,6 +1,6 @@
 <html>
     <head>
-      <script src="node_modules/vizceral/dist/vizceral.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vizceral/4.6.0/vizceral.min.js"></script>
       <script>
         function run () {
           var viz = new Vizceral.default(document.getElementById('vizceral'));
@@ -25,9 +25,18 @@
           viz.animate();
         }
       </script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+      <script>
+      var socket = io('http://localhost:80/');
+        socket.on('json', function(visitas){
+          document.getElementById('json').innerHTML = visitas;
+          console.log(visitas);
+        });
+      </script>
       <title>Vanilla Vizceral Example with Sample Data</title>
     </head>
     <body onload='run()'>
       <canvas id='vizceral'></canvas>
+      <div id='json'></div>
     </body>
   </html>
