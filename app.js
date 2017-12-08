@@ -1,5 +1,6 @@
 import ContainerFactory from "./containerFactory";
 import Container from "./container";
+import Intelligence from "./intelligence";
 
 var cf = new ContainerFactory();
 var msg = undefined;
@@ -42,4 +43,6 @@ async function start(){
         io.emit('json',JSON.stringify(disciplinasContainers));
     },2000);
 }
-start();
+//start();
+var intelligence = new Intelligence();
+intelligence.run();
