@@ -9,6 +9,54 @@ var app = require('http').createServer(index)
     , io = require('socket.io')(80)
     , fs = require('fs')
 ;
+var vizceral =
+{
+    name: 'octoplus',
+    renderer: 'region',
+    maxVolume: 5000,
+    nodes: [
+      {name: 'ROUTER'},
+      {name: 'BD'}
+    ],
+    connections: [
+      {
+        source: 'ROUTER',
+        target: 'disciplinas_1',
+        metrics: { normal: 20, warning: 0, danger: 0 },
+        metadata: { streaming: true }
+      },
+      {
+        source: 'ROUTER',
+        target: 'disciplinas_2',
+        metrics: { normal: 20, warning: 0, danger: 0 },
+        metadata: { streaming: true }
+      },
+      {
+        source: 'ROUTER',
+        target: 'disciplinas_3',
+        metrics: { normal: 20, warning: 0, danger: 0 },
+        metadata: { streaming: true }
+      },
+      {
+        source: 'disciplinas_1',
+        target: 'BD',
+        metrics: { normal: 20, warning: 0, danger: 0 },
+        metadata: { streaming: true }
+      },
+      {
+        source: 'disciplinas_2',
+        target: 'BD',
+        metrics: { normal: 20, warning: 0, danger: 0 },
+        metadata: { streaming: true }
+      },
+      {
+        source: 'disciplinas_3',
+        target: 'BD',
+        metrics: { normal: 20, warning: 0, danger: 0 },
+        metadata: { streaming: true }
+      }
+    ]
+};
 
 app.listen(3000, function() {
     console.log("Servidor rodando!");
@@ -35,14 +83,15 @@ async function start(){
             container.setStartCommands("git clone https://github.com/gabrielvcunha/frameworkufrrj_ms.git; cd /frameworkufrrj_ms; git checkout disciplinas; npm install; npm start");
             container.setId(await cf.createContainer(container));
             disciplinasContainers.push(container);
+            vizceral.nodes.push({name: container.getName()});
         }
         return;
     }
-    await createDisciplinas(5);
+    await createDisciplinas(2);
     setInterval(function(){
-        io.emit('json',JSON.stringify(disciplinasContainers));
-    },2000);
+        io.emit('json',vizceral);
+    },5000);
 }
-//start();
-var intelligence = new Intelligence();
-intelligence.run();
+start();
+//var intelligence = new Intelligence();
+//intelligence.run();
