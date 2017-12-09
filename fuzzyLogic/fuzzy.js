@@ -16,13 +16,12 @@ export default class Fuzzy{
         for(let curve of this.curves){
             this.fuzzResult.push(
                 {
-                    'curve':curve.getTitle(), 
-                    'axis':curve.getAxis(),
-                    'fuzzy':curve.getFuzz(value)
+                    title:curve.getTitle(), 
+                    axis:curve.getAxis(),
+                    fuzzy:curve.getFuzz(value)
                 }
             );
         }
-        console.log("\n" + this.title + ":");
         return this.fuzzResult;
     }
 }

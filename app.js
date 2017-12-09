@@ -29,7 +29,7 @@ async function start(){
     io.emit('json',vizceral);
     console.log(vizceral);
 }
-start();
+//start();
 
-//var intelligence = new Intelligence();
-//intelligence.run();
+var intelligence = new Intelligence();
+intelligence.run();
