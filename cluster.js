@@ -52,4 +52,8 @@ export default class Cluster{
     getContainers(){
         return this.containers;
     }
+
+    getName(){
+        return this.name;
+    }
 }

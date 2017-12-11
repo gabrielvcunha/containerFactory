@@ -35,9 +35,9 @@ export default class Intelligence{
         this.fuzz[2] = undefined;
         
         this.qtdContainers = new Fuzzy("Quantidade de containers ativos");
-        this.qtdContainers.add('eficiente', 0, 0, 1, 3);
-        this.qtdContainers.add('medio', 2, 3, 4, 5);
-        this.qtdContainers.add('deficiente', 3, 5, 6, 6);
+        this.qtdContainers.add('eficiente', 1, 1, 2, 4);
+        this.qtdContainers.add('medio', 3, 4, 5, 6);
+        this.qtdContainers.add('deficiente', 4, 6, 7, 7);
         this.fuzz[3] = undefined;
     }
 

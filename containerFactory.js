@@ -70,4 +70,46 @@ export default class ContainerFactory{
         });
         return msg;
     }
+
+    async showStats(){
+        var result = [];
+        var stats = await this.getStats();
+        var statsArray = stats.split("\n");
+        for (var i = 0; i < statsArray.length; i++){
+            if (i == 0) continue;
+            if (i == (statsArray.length - 1)) continue;
+            var containerStats = statsArray[i];
+            var remove = "";
+            var flag = false;
+            var stat = "";
+            var count = 0;
+            var parcialResult = [];
+            for (var z = 0; z < 12; z++){
+                remove += containerStats.charAt(z);
+            }
+            parcialResult.push(remove);
+            containerStats = containerStats.replace(remove,"");
+            remove = "";
+            for (var j = 0; j < containerStats.length; j++){
+                var code = containerStats.charCodeAt(j); 
+                if (((code > 47) && (code < 58)) || (code == 46)){
+                    stat += containerStats.charAt(j);
+                    flag = true;
+                }
+                else{
+                    if (flag){
+                        parcialResult.push(stat);
+                        stat = "";
+                        flag = false;
+                        count++;
+                        if (count == 2){
+                            result.push(parcialResult);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
