@@ -18,18 +18,18 @@ function index(req, res){
 };
 
 var disciplinas = new Cluster('disciplinas', 'node', "git clone https://github.com/gabrielvcunha/frameworkufrrj_ms.git; cd /frameworkufrrj_ms; git checkout disciplinas; npm install; npm start");
-var router = new Cluster('router', 'node', "git clone https://github.com/gabrielvcunha/frameworkufrrj_ms.git; cd /frameworkufrrj_ms; git checkout router; npm install; npm start");
+var router = new Cluster('router', 'node', "git clone https://github.com/gabrielvcunha/frameworkufrrj_ms.git; cd /frameworkufrrj_ms; git checkout router; npm install; npm start","127.0.0.1:8080:8080");
 
 async function start(){
-    await router.add(1);
-    await disciplinas.add(2);
+    await router.setNodes(1);
+    await disciplinas.setNodes(1);
     for (let container of disciplinas.getContainers()){
         vizceral.nodes.push({name: container.getName()});
     }
     io.emit('json',vizceral);
-    console.log(vizceral);
 }
-//start();
 
-var intelligence = new Intelligence();
-intelligence.run();
+start();
+
+//var intelligence = new Intelligence();
+//intelligence.run();

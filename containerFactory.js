@@ -28,4 +28,30 @@ export default class ContainerFactory{
         });
         return msg;
     }
+
+    async destroyContainer(container){
+        var cmd = "docker stop " + container.getName();
+        var msg = undefined;
+        await this.ps.addCommand(cmd)
+        await this.ps.invoke()
+        .then(output => {
+          msg = output;
+        })
+        .catch(err => {
+          msg = err;
+          this.ps.dispose();
+          return msg;
+        });
+        cmd = "docker rm " + container.getName();
+        await this.ps.addCommand(cmd)
+        await this.ps.invoke()
+        .then(output => {
+          msg = output;
+        })
+        .catch(err => {
+          msg = err;
+          this.ps.dispose();
+        });
+        return msg;
+    }
 }
