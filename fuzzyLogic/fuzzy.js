@@ -24,4 +24,8 @@ export default class Fuzzy{
         }
         return this.fuzzResult;
     }
+
+    defuzzify(fuzz){
+        return this.curves[fuzz[0]].getDefuzz(fuzz[1]);
+    }
 }

@@ -18,4 +18,9 @@ export default class Fuzz{
         var result = this.curve.calculate(value);        
         return result;
     }
+
+    getDefuzz(value){
+        var result = this.curve.reverse(value);
+        return result;
+    }
 }

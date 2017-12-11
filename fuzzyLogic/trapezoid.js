@@ -25,4 +25,8 @@ export default class Trapezoid{
         }
         return "error";
     }
+
+    reverse(value){
+        return value * this.p2; 
+    }
 }
