@@ -54,4 +54,20 @@ export default class ContainerFactory{
         });
         return msg;
     }
+
+    async getStats(){
+        var cmd = "docker stats --no-stream";
+        var msg = undefined;
+        await this.ps.addCommand(cmd)
+        await this.ps.invoke()
+        .then(output => {
+          msg = output;
+        })
+        .catch(err => {
+          msg = err;
+          this.ps.dispose();
+          return msg;
+        });
+        return msg;
+    }
 }

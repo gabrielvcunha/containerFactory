@@ -1,7 +1,9 @@
 import Cluster from "./cluster";
 import Intelligence from "./intelligence";
+import ContainerFactory from "./containerFactory";
 
 var vizceral = require("./monitor");
+var cf = new ContainerFactory();
 
 var app = require('http').createServer(index)
     , io = require('socket.io')(80)
@@ -29,7 +31,11 @@ async function start(){
     io.emit('json',vizceral);
 }
 
-start();
+//start();
 
 //var intelligence = new Intelligence();
 //intelligence.run();
+async function showStats(){
+    console.log(await cf.getStats());
+}
+showStats();
