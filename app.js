@@ -3,6 +3,7 @@ import Intelligence from "./intelligence";
 import ContainerFactory from "./containerFactory";
 import express from "express";
 
+const vizceralModel = require("./vizceralModel");
 var vizceral = require("./monitor");
 var cf = new ContainerFactory();
 var intelligence = new Intelligence();
@@ -36,7 +37,19 @@ async function start(){
         vizceral.nodes.push({name: container.getName()});
     }
     io.emit('json',vizceral);
-    await checkPerformance(elasticClusters);
+    var optimized = await checkPerformance(elasticClusters);
+    await optimize(optimized);
+}
+
+async function optimize(optimizedNodes){
+    await disciplinas.setNodes(optimizedNodes);
+    vizceral = "";
+    vizceral = vizceralModel;
+    for (let container of disciplinas.getContainers()){
+        vizceral.nodes.push({name: container.getName()});
+    }
+    io.emit('json',vizceral);
+    return;
 }
 
 async function checkPerformance(clusterGroup){
@@ -65,10 +78,10 @@ async function checkPerformance(clusterGroup){
         console.log("Uso total de memória: " + memoMax);
         console.log("Uso médio de memória: " + memoMed);
         console.log("Uso médio de CPU: " + cpuMed);
-        var otimizacao = await intelligence.run(memoMed, memoMax, cpuMed, qtdContainers);
-        console.log("\nNúmero otimizado de containers para o cluster " + cluster.getName() + ": " + otimizacao);
+        var optimized = await intelligence.run(memoMed, memoMax, cpuMed, qtdContainers);
+        console.log("\nNúmero otimizado de containers para o cluster " + cluster.getName() + ": " + optimized);
     }
-    return;
+    return optimized;
 }
 
 //start();
