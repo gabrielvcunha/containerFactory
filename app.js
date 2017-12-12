@@ -1,10 +1,13 @@
 import Cluster from "./cluster";
 import Intelligence from "./intelligence";
 import ContainerFactory from "./containerFactory";
+import express from "express";
 
 var vizceral = require("./monitor");
 var cf = new ContainerFactory();
 var intelligence = new Intelligence();
+var expressRouter = express();
+var expressRoutes = express.Router();
 
 var app = require('http').createServer(index)
     , io = require('socket.io')(80)
@@ -68,5 +71,15 @@ async function checkPerformance(clusterGroup){
     return;
 }
 
-start();
+//start();
 
+expressRoutes.all('/checkPerformance', async function(req,res){
+    start();
+    res.send(200);
+});
+
+expressRouter.use(expressRoutes);
+
+expressRouter.listen(8087, function() {
+    console.log("\n====ROUTER INICIADO====");
+});
