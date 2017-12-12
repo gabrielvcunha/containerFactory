@@ -84,12 +84,22 @@ async function checkPerformance(clusterGroup){
     return optimized;
 }
 
-//start();
-
-expressRoutes.all('/checkPerformance', async function(req,res){
+expressRoutes.all('/start', async function(req,res){
     start();
     res.send(200);
 });
+
+expressRoutes.all('/optimize', async function(req,res){
+    var optimized = await checkPerformance(elasticClusters);
+    await optimize(optimized);
+    res.send(200);
+});
+
+expressRouter.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 expressRouter.use(expressRoutes);
 
